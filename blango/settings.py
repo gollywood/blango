@@ -22,7 +22,9 @@ class Dev(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
     
     AUTH_USER_MODEL = "blango_auth.User"
-    
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    ACCOUNT_ACTIVATION_DAYS = 7
+    REGISTRATION_OPEN = True
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
