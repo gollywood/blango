@@ -73,7 +73,7 @@ class Dev(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     
     DEBUG = values.BooleanValue(True) 
-
+    
     ALLOWED_HOSTS = ['*']
     X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
     CSRF_COOKIE_SAMESITE = None
@@ -99,6 +99,7 @@ class Dev(Configuration):
         "debug_toolbar",
         "rest_framework",
         "rest_framework.authtoken",
+        "drf_yasg" 
     ]
 
     MIDDLEWARE = [
@@ -111,6 +112,13 @@ class Dev(Configuration):
         #'django.middleware.clickjacking.XFrameOptionsMiddleware',
           "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
+    
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
+            "Basic": {"type": "basic"},
+        }
+    }
 
     INTERNAL_IPS = ["192.168.11.179"]
 
