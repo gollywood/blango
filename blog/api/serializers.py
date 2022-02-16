@@ -4,6 +4,12 @@ from blango_auth.models import User
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.HyperlinkedRelatedField(
+        queryset=User.objects.all(),
+        view_name="api_user_detail",
+        lookup_field="email"
+    )
+
     class Meta:
         model = Post
         fields = "__all__"
@@ -13,7 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["first_name", "last_name", "email"]
 
 
 class TagSerializer(serializers.ModelSerializer):

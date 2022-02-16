@@ -6,9 +6,13 @@ from blog.models import Post, Tag
 from blango_auth.models import User
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
 
-class UserViewSet(viewsets.ModelViewSet):
+
+class UserDetail(generics.RetrieveAPIView):
+    lookup_field = "email"
+    
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
