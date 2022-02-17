@@ -24,26 +24,25 @@ schema_view = get_schema_view(
 )
 
 router.register("posts", PostViewSet)
-#router.register("users", UserViewSet)
+# router.register("users", UserViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
     path("users/<str:email>", UserDetail.as_view(),
-    name="api_user_detail"),
+         name="api_user_detail"),
 ]
 
 urlpatterns += [
     path("auth/", include("rest_framework.urls")),
-    path("token-auth/", views.obtain_auth_token),
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
+    #    path("token-auth/", views.obtain_auth_token),
+    #    re_path(
+    #        r"^swagger(?P<format>\.json|\.yaml)$",
+    #        schema_view.without_ui(cache_timeout=0),
+    #        name="schema-json",
+    #    ),
+    #    path(
+    #        "swagger/",
+    #        schema_view.with_ui("swagger", cache_timeout=0),
+    #        name="schema-swagger-ui",
+    #        ),
 ]
-

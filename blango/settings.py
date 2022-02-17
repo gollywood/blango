@@ -16,11 +16,13 @@ from configurations import Configuration
 from configurations import values
 import dj_database_url
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'blango.settings'
+
 
 class Dev(Configuration):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
-    
+
     AUTH_USER_MODEL = "blango_auth.User"
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     ACCOUNT_ACTIVATION_DAYS = 7
@@ -71,19 +73,18 @@ class Dev(Configuration):
     SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
 
     # SECURITY WARNING: don't run with debug turned on in production!
-    
-    DEBUG = values.BooleanValue(True) 
-    
+
+    DEBUG = values.BooleanValue(True)
+
     ALLOWED_HOSTS = ['*']
-    X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    # X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
     CSRF_COOKIE_SAMESITE = None
-    CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
+    # CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = 'None'
     SESSION_COOKIE_SAMESITE = 'None'
 
-# Application definition
+    # Application definition
 
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -99,20 +100,20 @@ class Dev(Configuration):
         "debug_toolbar",
         "rest_framework",
         "rest_framework.authtoken",
-        "drf_yasg" 
+        "drf_yasg"
     ]
 
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
-        #'django.middleware.csrf.CsrfViewMiddleware',
+        # 'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        #'django.middleware.clickjacking.XFrameOptionsMiddleware',
-          "debug_toolbar.middleware.DebugToolbarMiddleware",
+        # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
-    
+
     SWAGGER_SETTINGS = {
         "SECURITY_DEFINITIONS": {
             "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
@@ -121,7 +122,6 @@ class Dev(Configuration):
     }
 
     INTERNAL_IPS = ["192.168.11.179"]
-
 
     ROOT_URLCONF = 'blango.urls'
 
@@ -143,19 +143,17 @@ class Dev(Configuration):
 
     WSGI_APPLICATION = 'blango.wsgi.application'
 
-
     # Database
     # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-    #DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
+    # DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
 
     DATABASES = {
-    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
-    "alternative": dj_database_url.config(
-        "ALTERNATIVE_DATABASE_URL",
-        default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
-    ),
-}
-
+        "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
+        "alternative": dj_database_url.config(
+            "ALTERNATIVE_DATABASE_URL",
+            default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
+        ),
+    }
 
     DATABASES_bkup = {
         'default': {
@@ -163,7 +161,6 @@ class Dev(Configuration):
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
 
     # Password validation
     # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -184,32 +181,31 @@ class Dev(Configuration):
     ]
 
     PASSWORD_HASHERS = [
-      'django.contrib.auth.hashers.Argon2PasswordHasher',
-      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django.contrib.auth.hashers.Argon2PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     ]
 
     REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ]
-}
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.TokenAuthentication",
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+        ]
+    }
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
     LANGUAGE_CODE = 'en-us'
-    
-    TIME_ZONE = values.Value("UTC")#, environ_prefix="BLANGO")) 
+
+    TIME_ZONE = values.Value("UTC")  # , environ_prefix="BLANGO"))
 
     USE_I18N = True
 
     USE_L10N = True
 
     USE_TZ = True
-
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/3.2/howto/static-files/
