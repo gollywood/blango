@@ -50,7 +50,7 @@ class PostApiTestCase(TestCase):
 
     def test_post_list(self):
         resp = self.client.get("/api/v1/posts/")
-        data = resp.json()
+        data = resp.json()["results"]
         self.assertEqual(len(data), 2)
 
         for post_dict in data:
@@ -93,8 +93,10 @@ class PostApiTestCase(TestCase):
             "content": "Test Content",
             "author": "http://testserver/api/v1/users/test@example.com",
             "published_at": "2021-01-10T09:00:00Z",
+            "tags": None
         }
         resp = self.client.post("/api/v1/posts/", post_dict)
+        print(resp.json())
         post_id = resp.json()["id"]
         post = Post.objects.get(pk=post_id)
         self.assertEqual(post.title, post_dict["title"])
