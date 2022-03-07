@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load blog_extras %}
 {% load blog_extras cache %}
+{% load static %}
 {% block content %}
     <h2>{{ post.title }}</h2>
     {% row %}
@@ -38,4 +39,6 @@
             {% endcache %}
         {% endcol %}
     {% endrow %}
+    <script src="{% static "blog/blog.js" %}"></script>
+
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Post Table{% endblock %}
+{% load static %}
+{% block content %}
+    <div id="react_root">
+
+    </div>
+    <script>
+    const postListUrl = '{{ post_list_url|escapejs }}'
+</script>
+<script type="module" src="{% static "blog/blog.js" %}"></script>
+{% endblock %}

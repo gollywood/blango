@@ -86,6 +86,7 @@ class Dev(Configuration):
 
     MEDIA_ROOT = BASE_DIR / "media"  # for versatileimagefield
     MEDIA_URL = "/media/"
+    STATIC_URL = 'static/'
 
     # Application definition
 
